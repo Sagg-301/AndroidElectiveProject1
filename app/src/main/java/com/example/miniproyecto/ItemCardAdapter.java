@@ -14,23 +14,42 @@ import android.widget.Toast;
 import com.example.miniproyecto.Entities.Item;
 import com.squareup.picasso.Picasso;
 
-public class ItemCardAdapter extends BaseAdapter {
-    Item [] result;
-    Context context;
-    int[] image_id;
-    private static LayoutInflater inflater=null;
+import java.util.ArrayList;
 
-    public ItemCardAdapter(MainActivity mainActivity, Item[] items, int[] images) {
+public class ItemCardAdapter extends BaseAdapter {
+    private ArrayList<Item> result;
+    private ArrayList<Integer> image_id;
+
+    private Context context;
+    private ItemListActivity itemListActivity;
+    private MainActivity mainActivity;
+
+
+    private static LayoutInflater inflater = null;
+
+
+
+    ItemCardAdapter(ItemListActivity itemListActivity, ArrayList<Item> items, ArrayList<Integer> images ) {
+        this.result=items;
+        this.context=itemListActivity;
+        this.itemListActivity=itemListActivity;
+        this.image_id = images;
+        inflater = ( LayoutInflater )context.
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    ItemCardAdapter(MainActivity mainActivity, ArrayList<Item> items, ArrayList<Integer> images ) {
         this.result=items;
         this.context=mainActivity;
+        this.mainActivity=mainActivity;
         this.image_id = images;
-        this.inflater = ( LayoutInflater )context.
+        inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return result.length;
+        return result.size();
     }
 
     @Override
@@ -54,15 +73,26 @@ public class ItemCardAdapter extends BaseAdapter {
         holder.price = (TextView) view.findViewById(R.id.price);
         holder.image=(ImageView) view.findViewById(R.id.item_image);
 
-        holder.cardtitle.setText(result[position].getName());
-        holder.carddescription.setText(result[position].getDescription());
-        holder.price.setText( "Precio: "+Double.toString(result[position].getPrice())+"$" );
-        Picasso.with(context).load(image_id[position]).into(holder.image);
+        holder.cardtitle.setText(result.get(position).getName());
+        holder.carddescription.setText(result.get(position).getDescription());
+        holder.price.setText( "Precio: "+Double.toString(result.get(position).getPrice())+"$" );
+        Picasso.with(context).load(image_id.get(position)).into(holder.image);
 
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Clickeaste " + result[position], Toast.LENGTH_LONG).show();
+
+
+            Toast.makeText(context, "Clickeaste " + result.get(position), Toast.LENGTH_LONG).show();
+
+
+            if(itemListActivity != null){
+
+                itemListActivity.launchMainActivity(result.get(position), image_id.get(position));
+
+            }
+
+
             }
         });
         return view;

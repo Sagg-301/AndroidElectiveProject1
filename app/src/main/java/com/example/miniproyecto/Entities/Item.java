@@ -1,9 +1,11 @@
 package com.example.miniproyecto.Entities;
 
+import java.io.Serializable;
+
 /**
  * Clase para manejar articulos
  */
-public class Item {
+public class Item implements Serializable{
     private String name;
     private String description;
     private double price;

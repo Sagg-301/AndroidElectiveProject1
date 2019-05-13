@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MiniProyecto</string>
+    <string name="title_activity_item_list">ItemListActivity</string>
+    <string name="add_article">Agregar artículo</string>
 </resources>
