@@ -30,15 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
         //Busca los intents
         Intent intent = getIntent();
-        Item item = (Item) intent.getSerializableExtra("item");
-        int image = intent.getIntExtra("image",0);
+        ArrayList<Item> intentItems = (ArrayList<Item>) intent.getSerializableExtra("items");
+        ArrayList<Integer> images = (ArrayList<Integer>)intent.getSerializableExtra("images");
 
         //Si se trajo un intent con un elemento del carrito lo añade a la lista
-        if(item != null && items.size() < 10){
+        if(intentItems != null && items.size() < 10){
 
             //Añade a los arrays
-            items.add(item) ;
-            item_images.add(image);
+            items = intentItems ;
+            item_images = images;
 
             list_adapter = new ItemCardAdapter(this,items, item_images);
 
@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     public void launchSecondActivity(View view) {
 
         Intent intent = new Intent(this, ItemListActivity.class);
+        intent.putExtra("savedItems", this.items);
+        intent.putExtra("savedImages", this.item_images);
         startActivity(intent);
 
     }

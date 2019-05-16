@@ -83,7 +83,7 @@ public class ItemCardAdapter extends BaseAdapter {
             public void onClick(View v) {
 
 
-            Toast.makeText(context, "Clickeaste " + result.get(position), Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, "Clickeaste " + result.get(position), Toast.LENGTH_LONG).show();
 
 
             if(itemListActivity != null){

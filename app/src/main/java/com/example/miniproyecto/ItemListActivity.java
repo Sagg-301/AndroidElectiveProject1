@@ -3,8 +3,6 @@ package com.example.miniproyecto;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -23,6 +21,10 @@ public class ItemListActivity extends AppCompatActivity {
 
     //Objeto usado para almacenar los objetos de la tienda
     ItemCardAdapter list_adapter;
+
+    //Arreglo con items guardados
+    public ArrayList<Item> savedItems = new ArrayList<Item>();
+    public ArrayList<Integer> savedImages = new ArrayList<Integer>();
 
 
     public static ArrayList<Item> items = new ArrayList<Item>(){{
@@ -61,6 +63,15 @@ public class ItemListActivity extends AppCompatActivity {
         //Setea la lista de objetos al listview
         items_list.setAdapter(list_adapter);
 
+        Intent intent = getIntent();
+        ArrayList<Item> intentSavedItems = (ArrayList<Item>) intent.getSerializableExtra("savedItems");
+        ArrayList<Integer> intentSavedImages = (ArrayList<Integer>) intent.getSerializableExtra("savedImages");
+
+        if(intentSavedItems != null && intentSavedImages != null){
+            savedItems = intentSavedItems;
+            savedImages = intentSavedImages;
+        }
+
     }
 
     /**
@@ -84,8 +95,12 @@ public class ItemListActivity extends AppCompatActivity {
     public void launchMainActivity(Item item, int image) {
 
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("item", item);
-        intent.putExtra("image", image);
+        savedItems.add(item);
+        savedImages.add(image);
+        items.remove(item);
+        item_images.remove(item_images.indexOf(image));
+        intent.putExtra("items", savedItems);
+        intent.putExtra("images", savedImages);
         startActivity(intent);
     }
 
